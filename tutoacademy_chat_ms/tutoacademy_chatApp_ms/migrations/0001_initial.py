@@ -3,7 +3,7 @@
 from django.db import migrations, models
 import django.utils.timezone
 import djongo.models.fields
-import tutoacademy_chatApp_ms.models
+import tutoacademy_chatApp_ms.models.chat_model
 
 
 class Migration(migrations.Migration):
@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
                 ('chatId', models.AutoField(primary_key=True, serialize=False)),
                 ('sender', models.CharField(max_length=100)),
                 ('receiver', models.CharField(max_length=100)),
-                ('messages', djongo.models.fields.ArrayField(model_container=tutoacademy_chatApp_ms.models.Message)),
+                ('messages', djongo.models.fields.ArrayField(model_container=tutoacademy_chatApp_ms.models.chat_model.Message)),
                 ('state', models.BooleanField(default=True)),
                 ('createTime', models.DateTimeField(auto_now_add=True)),
             ],

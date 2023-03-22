@@ -1,6 +1,6 @@
 #Help to convert the complex types or model instances into native python data types that can easily rendered into JSON 
 from rest_framework import serializers
-from tutoacademy_chatApp_ms.models import  Message,Chat
+from tutoacademy_chatApp_ms.models.chat_model import  Message,Chat
 
 
 

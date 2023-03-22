@@ -1,6 +1,5 @@
 from django.db import models
 from djongo import models as mdls
-import datetime
 from django.utils import timezone
 
 

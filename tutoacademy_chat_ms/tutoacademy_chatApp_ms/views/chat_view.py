@@ -1,8 +1,7 @@
-from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from django.http.response import JsonResponse
-from tutoacademy_chatApp_ms.serializers import *
+from tutoacademy_chatApp_ms.serializers.chat_serializer import *
 from django.utils import timezone
 
 
@@ -45,13 +44,16 @@ def chatApi(request):
         ReceiverQuery = chatsData['receiver']
         chatExist = Chat.objects.filter(sender=senderQuery, receiver=ReceiverQuery).values(
         ) | Chat.objects.filter(sender=ReceiverQuery, receiver=senderQuery).values()
-        chatsData["messages"][0]['sendTime'] = timezone.now()
-        chatsData["messages"][0]['messageId'] = len(chatExist[0]['messages'])+1
-        messages = chatsData["messages"]
 
         if not chatExist:
             return JsonResponse('There is no chat for those users, please use post to create it', safe=False)
         
+        chatsData["messages"][0]['sendTime'] = timezone.now()
+        chatsData["messages"][0]['messageId'] = len(chatExist[0]['messages'])+1
+        messages = chatsData["messages"]
+
+
+
         chatId1 = chatExist[0]["chatId"]
         chat = Chat.objects.get(chatId=chatId1)
 
@@ -65,3 +67,37 @@ def chatApi(request):
     else:
         return JsonResponse('There is no function for that request, please use GET/POST/PATCH', safe=False)
     
+
+
+# Function that returns a chat with an ID given
+@csrf_exempt
+def chatApiId(request,id):
+    try: 
+        chat= Chat.objects.get(pk=id)
+    except Chat.DoesNotExist:
+        return JsonResponse('The chat does not exist, please create one with POST', safe=False)
+    
+    if request.method =='GET':
+        chat_serializer= ChatSerializer(chat)
+        return JsonResponse(chat_serializer.data, safe=False)
+    
+    else:
+        return JsonResponse('There is no function for that request, please use GET/id/', safe=False)
+
+
+ # Function that returns a chat with an User given
+@csrf_exempt
+def chatApiUser(request,name):
+
+    chatsExist = Chat.objects.filter(sender=name).values(
+    ) | Chat.objects.filter(receiver=name).values()
+
+    if(len(chatsExist)==0):
+        return JsonResponse('This user does not have any chat', safe=False)
+    
+    elif request.method =='GET':
+        chats_serializer= ChatSerializer(chatsExist,many=True)
+        return JsonResponse(chats_serializer.data, safe=False)
+    
+    else:
+        return JsonResponse('There is no function for that request, please use GET/user/', safe=False)

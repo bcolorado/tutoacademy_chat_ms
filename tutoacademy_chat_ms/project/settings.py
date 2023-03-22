@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-g-w$g4pf%nu^*%wpghf9++_+%_w-4366m0dz7$f&l30ia4rl=d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["0.0.0.0"]
+#ALLOWED_HOSTS = ["0.0.0.0",'127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -55,7 +56,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'tutoacademy_chat_ms.urls'
+ROOT_URLCONF = 'project.urls'
 
 TEMPLATES = [
     {
@@ -73,7 +74,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'tutoacademy_chat_ms.wsgi.application'
+WSGI_APPLICATION = 'project.wsgi.application'
 
 
 # Database
