@@ -3,7 +3,7 @@ from rest_framework.parsers import JSONParser
 from django.http.response import JsonResponse
 from tutoacademy_chatApp_ms.serializers.chat_serializer import *
 from django.utils import timezone
-
+from tutoacademy_chatApp_ms.queue.consumer import *
 
 @csrf_exempt
 def chatApi(request):
@@ -42,22 +42,26 @@ def chatApi(request):
         chatsData = JSONParser().parse(request)
         senderQuery = chatsData['sender']
         ReceiverQuery = chatsData['receiver']
+
+        #Search for a chat if exist between those two users
         chatExist = Chat.objects.filter(sender=senderQuery, receiver=ReceiverQuery).values(
         ) | Chat.objects.filter(sender=ReceiverQuery, receiver=senderQuery).values()
 
         if not chatExist:
             return JsonResponse('There is no chat for those users, please use post to create it', safe=False)
         
+        #Add manually createDate and UniqueId
         chatsData["messages"][0]['sendTime'] = timezone.now()
         chatsData["messages"][0]['messageId'] = len(chatExist[0]['messages'])+1
         messages = chatsData["messages"]
 
 
-
+        #Obtains the data from that specific chat
         chatId1 = chatExist[0]["chatId"]
         chat = Chat.objects.get(chatId=chatId1)
 
         if chat is not None:
+            #Adds the new message to the list of messages in that chat
             chat.messages.extend(messages)
             chat.save()
             return JsonResponse('Added succesfully', safe=False)
