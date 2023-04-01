@@ -3,6 +3,6 @@ from django.urls import path
 
 urlpatterns = [
     path('chat/',chat_view.chatApi),
-    path('chat/<int:id>/',chat_view.chatApiId),
-    path('chat/<str:name>/',chat_view.chatApiUser)
+    path('chat/id/<int:id>/',chat_view.chatApiId),
+    path('chat/user/<str:name>/',chat_view.chatApiUser)
 ]
