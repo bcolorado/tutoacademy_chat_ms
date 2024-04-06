@@ -1,0 +1,23 @@
+# Archivos generados por el sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de configuración
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Directorios de entorno virtual (por ejemplo, virtualenv o venv)
+venv/
+env/
+
+# Archivos de dependencias
+/lib/
+/lib64/
+/bin/
+/include/
+/parts/
+/build/
+/dist/
+/*.egg-info/
