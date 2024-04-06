@@ -5,7 +5,7 @@ import requests
 
 rabbit_settings = {
     "protocol": "amqp",
-    "hostname": "rabbitmq",
+    "hostname": "10.64.1.158",
     "port": 5672,
     "username": "guest",
     "password": "guest",
@@ -57,6 +57,5 @@ def connect_consume():
         print(str(e))
 
 #connect_consume()
-
 
 

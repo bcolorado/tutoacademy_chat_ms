@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-g-w$g4pf%nu^*%wpghf9++_+%_w-4366m0dz7$f&l30ia4rl=d'
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -84,7 +86,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'CLIENT': {
-            'host':'mongodb+srv://bcolorado:Rdxp5BVzrzTEAkWY@cluster0.q80i8rn.mongodb.net/?retryWrites=true&w=majority',
+            'host':config('HOST_DB_CLIENT'),
             'name':'tutoacademy_chatDb_ms',
             'authMechanism': 'SCRAM-SHA-1'   #For atlas cloud db
         }
